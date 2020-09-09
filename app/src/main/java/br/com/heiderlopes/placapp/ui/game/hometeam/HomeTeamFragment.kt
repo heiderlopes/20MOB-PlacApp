@@ -1,10 +1,12 @@
 package br.com.heiderlopes.placapp.ui.game.hometeam
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 import br.com.heiderlopes.placapp.R
 import br.com.heiderlopes.placapp.ui.game.awayteam.AwayTeamFragment
@@ -30,11 +32,14 @@ class HomeTeamFragment : Fragment() {
         }
     }
 
+    private fun sendHomeTeamName() {
+        val intent = Intent("FILTER_HOME_TEAM")
+        intent.putExtra("home_team", inputHomeTeam.text.toString())
+        LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+    }
+
     private fun nextScreen() {
-        val ft = activity?.supportFragmentManager?.beginTransaction()
-        ft?.replace(R.id.containerGame, AwayTeamFragment())
-        ft?.addToBackStack(null)
-        ft?.commit()
+        sendHomeTeamName()
     }
 
 }

@@ -1,10 +1,12 @@
 package br.com.heiderlopes.placapp.ui.game.event
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 import br.com.heiderlopes.placapp.R
 import br.com.heiderlopes.placapp.ui.game.hometeam.HomeTeamFragment
@@ -26,10 +28,13 @@ class EventFragment : Fragment() {
         }
     }
 
+    private fun sendEventName() {
+        val intent = Intent("FILTER_EVENT")
+        intent.putExtra("event_name", inputEvent.text.toString())
+        LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+    }
+
     private fun nextScreen() {
-        val ft = activity?.supportFragmentManager?.beginTransaction()
-        ft?.replace(R.id.containerGame, HomeTeamFragment())
-        ft?.addToBackStack(null)
-        ft?.commit()
+        sendEventName()
     }
 }

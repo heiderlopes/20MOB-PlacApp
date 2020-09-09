@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 import br.com.heiderlopes.placapp.R
 import br.com.heiderlopes.placapp.ui.score.ScoreActivity
@@ -31,9 +32,13 @@ class AwayTeamFragment : Fragment() {
         }
     }
     private fun nextScreen() {
-        val nextScreen = Intent(activity, ScoreActivity::class.java)
-        startActivity(nextScreen)
-        activity?.finish()
+        sendAwayTeamName()
+    }
+
+    private fun sendAwayTeamName() {
+        val intent = Intent("FILTER_AWAY_TEAM")
+        intent.putExtra("away_team", inputAwayTeam.text.toString())
+        LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
     }
 
 }
